@@ -1,7 +1,16 @@
 from django.shortcuts import render
 
+from .forms import ContactForm
+from .models import Contact
 
-# Create your views here.
+
+
 
 def front(request):
-    return render(request, 'front.html')
+    form = ContactForm(request.POST)
+    if form.is_valid():
+        form.save()
+        form = ContactForm()
+    return render(request,"front.html",{'form':form})
+
+
